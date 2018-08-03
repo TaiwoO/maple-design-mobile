@@ -1,12 +1,11 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import MapleDesign from './app/index'
 
-export default class App extends React.Component {
+export default class CharacterList extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <MapleDesign />
+        <Text>CharacterList</Text>
       </View>
     );
   }
@@ -14,6 +13,8 @@ export default class App extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-
+    borderWidth: 2,
+    borderColor: "orange",
+    height: "100%"
   },
 });
