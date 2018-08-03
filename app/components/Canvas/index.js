@@ -8,6 +8,7 @@ export default class Canvas extends Component {
 
         <ImageBackground
           source={require('../../assets/img/grid.png')}
+          // source={require('../../assets/img/maple-border.png')}
           style={{ width: "100%", height: "100%" }}
         >
           <Text>CANVAS</Text>
