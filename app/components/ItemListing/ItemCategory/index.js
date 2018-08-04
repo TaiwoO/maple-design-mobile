@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Alert, StyleSheet, Text, View, ScrollView, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, TouchableOpacity } from 'react-native';
 import _ from 'lodash';
 
 const sampleCategories = {
@@ -22,12 +22,37 @@ export default class ItemCategory extends Component {
           bounces={false}
         >
           {
-            drawCategoriesJsx(categories)
+            this.renderCategoriesJsx(categories)
           }
         </ScrollView>
       </View>
     );
   }
+
+  renderCategoriesJsx = (categories) => {
+    return categories.map((category, i) => (
+      <View key={i}>
+        <Text style={styles.category}>{category}</Text>
+        {this.renderSubcategoriesJsx(sampleCategories[category], category)}
+      </View>
+    ));
+  }
+
+  renderSubcategoriesJsx = (subcategories, category) => {
+    return subcategories.map((subcategory, i) => (
+      <View key={i} style={styles["subcategory-wrapper"]}  >
+        <TouchableOpacity
+          style={styles.subcategory}
+          onPress={() => {
+            this.props.handleSubcategorySelected(subcategory, category)
+          }}
+        >
+          <Text>{subcategory}</Text>
+        </TouchableOpacity>
+      </View>
+    ));
+  }
+
 }
 
 const styles = StyleSheet.create({
@@ -54,21 +79,3 @@ const styles = StyleSheet.create({
 
 });
 
-function drawCategoriesJsx(categories) {
-  return categories.map((category, i) => (
-    <View key={i}>
-      <Text style={styles.category}>{category}</Text>
-      {drawSubcategoriesJsx(sampleCategories[category])}
-    </View>
-  ));
-}
-
-function drawSubcategoriesJsx(subcategories) {
-  return subcategories.map((subcategory, i) => (
-    <View key={i} style={styles["subcategory-wrapper"]}  >
-      <TouchableOpacity style={styles.subcategory}>
-        <Text>{subcategory}</Text>
-      </TouchableOpacity>
-    </View>
-  ));
-}
