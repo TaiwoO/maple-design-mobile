@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, ScrollView, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, TouchableOpacity, ActivityIndicator } from 'react-native';
 import _ from 'lodash';
 
-const sampleCategories = {
+const sampleCategoriesNames = {
   character: ['Chair', 'Hair', 'Face'],
   armour: ['Hat', 'Cape', 'Top', 'Overall', 'Glove', 'Bottom', 'Shield', 'Shoes'],
   "one-handed weapon": ['Shining Rod', 'Soul Shooter', 'Desperado', 'Whip Blade', 'Scepter', 'Psy - limiter', 'Chain', 'Gauntlet', 'One - Handed Sword', 'One - Handed Axe', 'One - Handed Blunt Weapon', 'Dagger', 'Katara', 'Cane', 'Wand', 'Staff', 'Cash'],
@@ -12,28 +12,36 @@ const sampleCategories = {
 
 export default class ItemCategory extends Component {
 
+
   render() {
-    const categories = _.keys(sampleCategories);
+    const { categoryNames } = this.props
+    // const categories = _.keys(categoriesNames);
 
     return (
       <View style={styles.container}>
+        <ActivityIndicator style={styles["loading-spinner"]} animating={this.props.isLoadingItems} size="small" color="#2196F3" />
         {/* TODO: Search */}
         <ScrollView
           bounces={false}
         >
+
+
           {
-            this.renderCategoriesJsx(categories)
+            this.renderCategoriesJsx(categoryNames)
           }
         </ScrollView>
       </View>
     );
   }
 
-  renderCategoriesJsx = (categories) => {
+  renderCategoriesJsx = (categoryNames) => {
+
+    const categories = _.keys(categoryNames);
+
     return categories.map((category, i) => (
       <View key={i}>
         <Text style={styles.category}>{category}</Text>
-        {this.renderSubcategoriesJsx(sampleCategories[category], category)}
+        {this.renderSubcategoriesJsx(categoryNames[category], category)}
       </View>
     ));
   }
@@ -76,6 +84,14 @@ const styles = StyleSheet.create({
   "subcategory": {
     padding: 10,
   },
+
+  "loading-spinner": {
+    position: 'absolute',
+    marginTop: '50%',
+    left: 0,
+    right: 0,
+    // margin: 'auto'
+  }
 
 });
 
