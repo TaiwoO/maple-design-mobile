@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
 
   "preview-item-image-container": {
     // borderWidth: 1,
-    padding: 5
+    padding: 6
   },
 
   "preview_item__text": {
