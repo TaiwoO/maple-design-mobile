@@ -10,7 +10,7 @@ export default class ItemListing extends Component {
     itemListing: [], // [{item1},{item2}]
     categories: {}, // {"Armour" : {"Hat": [{hat1},{hat2},...] , "top": [{top1},{top2}, ...]}
     categoryNames: {},// {character: ['Chair', 'Hair', 'Face'],  armour: ['Hat', 'Cape', 'Top']}
-    selectedSubcategory: null,
+    selectedSubcategory: undefined,
     isLoadingItems: false,
     currentPreviewItems: [] // list of ids
   }
@@ -32,7 +32,19 @@ export default class ItemListing extends Component {
           });
         const categoryNames = _.mapValues(categories, _.keys);
 
-        this.setState(() => ({ itemListing, categories, categoryNames }));
+        // Set Up the first section to be displayed
+        //
+        const firstCategoryName = _.keys(categoryNames)[0] || undefined;
+        const firstSubCategoryName = categoryNames[firstCategoryName][0] || undefined;
+        const firstPreviewItems = firstCategoryName && firstSubCategoryName ? categories[firstCategoryName][firstSubCategoryName] : [];
+    
+        this.setState(() => ({
+          selectedSubcategory: firstSubCategoryName,
+          currentPreviewItems: firstPreviewItems,
+          itemListing,
+          categories,
+          categoryNames
+        }));
 
       })
       .catch((err) => {
@@ -80,7 +92,8 @@ export default class ItemListing extends Component {
           <ItemCategory
             categoryNames={this.state.categoryNames}
             handleSubcategorySelected={this.handleSubcategorySelected}
-            isLoadingItems={this.state.isLoadingItems} />
+            isLoadingItems={this.state.isLoadingItems}
+            selectedSubcategory={this.state.selectedSubcategory} />
         </View>
 
         <View style={styles["item-preview"]}>
@@ -103,6 +116,8 @@ const styles = StyleSheet.create({
   },
 
   "item-category": {
+    borderRightWidth: .4,
+    borderColor: '#488AC7',
     flex: 4
   },
 

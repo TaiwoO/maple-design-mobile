@@ -12,7 +12,6 @@ const sampleCategoriesNames = {
 
 export default class ItemCategory extends Component {
 
-
   render() {
     const { categoryNames } = this.props
     // const categories = _.keys(categoriesNames);
@@ -47,18 +46,24 @@ export default class ItemCategory extends Component {
   }
 
   renderSubcategoriesJsx = (subcategories, category) => {
-    return subcategories.map((subcategory, i) => (
-      <View key={i} style={styles["subcategory-wrapper"]}  >
-        <TouchableOpacity
-          style={styles.subcategory}
-          onPress={() => {
-            this.props.handleSubcategorySelected(subcategory, category)
-          }}
-        >
-          <Text>{subcategory}</Text>
-        </TouchableOpacity>
-      </View>
-    ));
+
+    return subcategories.map((subcategory, i) => {
+      const selectedSubcategoryStyle = subcategory == this.props.selectedSubcategory ? styles["subcategory--selected"] : {};
+      const selectedSubcategoryTextStyle = subcategory == this.props.selectedSubcategory ? styles["subcategory__text--selected"] : {};
+
+      return (
+        <View key={i} style={styles["subcategory-wrapper"]}  >
+          <TouchableOpacity
+            style={[styles.subcategory, selectedSubcategoryStyle]}
+            onPress={() => {
+              this.props.handleSubcategorySelected(subcategory, category)
+            }}
+          >
+            <Text style={selectedSubcategoryTextStyle}>{subcategory}</Text>
+          </TouchableOpacity>
+        </View>)
+
+    });
   }
 
 }
@@ -83,6 +88,14 @@ const styles = StyleSheet.create({
 
   "subcategory": {
     padding: 10,
+  },
+
+  "subcategory--selected": {
+    backgroundColor: '#E0E0E0',
+  },
+
+  "subcategory__text--selected": {
+    fontWeight: 'bold'
   },
 
   "loading-spinner": {
