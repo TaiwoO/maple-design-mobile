@@ -11,9 +11,11 @@ export default class MapleDesign extends Component {
       <View style={styles["widget"]}>
         <StatusBar hidden={true} />
         <View style={styles["widget-top"]}>
+          
           <View style={styles["widget-top__item-listing"]}>
             <ItemListing />
           </View>
+
           <View style={styles["widget-top__canvas"]}>
             <Canvas />
           </View>
