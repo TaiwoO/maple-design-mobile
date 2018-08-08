@@ -14,17 +14,17 @@ export default class ItemPreview extends Component {
     this.flatListRef = React.createRef();
   }
 
-  componentDidMount() {
+  shouldComponentUpdate(nextProps, nextState) {
+    if (!_.isEqual(nextProps.previewItems, this.props.previewItems)) {
+      return true;
+    }
+    console.log("Dont change\n")
 
+    return false;
   }
 
   componentDidUpdate(prevProps, prevState) {
     // TODO: Create a cache of previously previewed items?
-
-    if (_.isEqual(prevProps.previewItems, this.props.previewItems)) {
-      console.log("Dont change\n")
-      return;
-    }
 
     this.flatListRef.current.scrollToOffset({ offset: 0, animated: true });
     console.log("Change\n")
@@ -49,7 +49,7 @@ export default class ItemPreview extends Component {
     const { previewItems } = this.props;
     const previewItemWidth = 40;
     const previewItemHeight = 42;
-
+    console.log("RERENDERING")
     return (
       <View style={styles.container} onLayout={this.onLayout}>
 
@@ -57,11 +57,12 @@ export default class ItemPreview extends Component {
           this.state.dimensions &&
           (
             <FlatList
+
               contentContainerStyle={styles["preview-items-container"]}
               numColumns={Math.floor(this.state.dimensions.width / previewItemWidth)}
               data={previewItems}
               renderItem={({ item, index }) => (
-                <View style={{ width: previewItemWidth, height: previewItemHeight , flex: 1}}>
+                <View style={{ width: previewItemWidth, height: previewItemHeight, flex: 1 }}>
                   <View style={styles["preview-item-image-container"]}>
                     <Image
                       source={{ uri: `https://labs.maplestory.io/api/${'gms'}/${'latest'}/item/${item.id}/icon` }}

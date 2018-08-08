@@ -122,7 +122,9 @@ const styles = StyleSheet.create({
   },
 
   "item-preview": {
-    flex: 9
+    flex: 9,
+    borderRightWidth: .3,
+    borderColor: '#488AC7',
   }
 
 });

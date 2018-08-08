@@ -7,6 +7,7 @@ export default class Canvas extends Component {
 
 
   render() {
+    const { characters } = this.props
     return (
 
       <View style={styles.container}>
@@ -14,16 +15,20 @@ export default class Canvas extends Component {
         <DraggableCanvas
           bgSrc={require('../../assets/img/graphy.png')}
         >
-          <DraggableContainer>
-            <View style={styles.circle} />
-          </DraggableContainer>
 
-          <DraggableContainer>
-            <View style={styles.circle} />
-          </DraggableContainer>
-          <DraggableContainer>
-            <View style={styles.circle} />
-          </DraggableContainer>
+          {
+            characters.map((character) => {
+              return (
+                <DraggableContainer key={character.id}>
+                  <Image
+                    source={{ uri: character.generateImageUrl() }}
+                    style={{ width: 65, height: 100, resizeMode: 'contain' }}
+                  />
+                </DraggableContainer>
+              );
+            })
+          }
+
         </DraggableCanvas>
 
       </View>
@@ -37,8 +42,8 @@ export default class Canvas extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    borderWidth: 2,
-    borderColor: "yellow",
+    // borderLeftWidth: 1,
+    // borderColor: "yellow",
     height: "100%"
   },
 

@@ -3,21 +3,33 @@ import { StyleSheet, Text, View, StatusBar } from 'react-native';
 import ItemListing from './components/ItemListing/index';
 import Canvas from './components/Canvas/index';
 import CharacterList from './components/CharacterList/index';
+import { Character } from './models/Character';
 
 export default class MapleDesign extends Component {
+
+  state = {
+    characters: [new Character(), new Character()]
+  }
+
+  constructor(props) {
+    super(props);
+    // console.log(char1)
+
+  }
+
   render() {
     return (
 
       <View style={styles["widget"]}>
         <StatusBar hidden={true} />
         <View style={styles["widget-top"]}>
-          
+
           <View style={styles["widget-top__item-listing"]}>
             <ItemListing />
           </View>
 
           <View style={styles["widget-top__canvas"]}>
-            <Canvas />
+            <Canvas characters={this.state.characters} />
           </View>
         </View>
 
@@ -59,3 +71,4 @@ const styles = StyleSheet.create({
     // flex: 1
   },
 });
+
