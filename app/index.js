@@ -7,14 +7,33 @@ import { Character } from './models/Character';
 
 export default class MapleDesign extends Component {
 
-  state = {
-    characters: [new Character(), new Character()]
-  }
-
   constructor(props) {
     super(props);
     // console.log(char1)
 
+    let defaultChar = new Character();
+    let testChar = new Character();
+    this.state = {
+      characters: [defaultChar, testChar],
+      selectedCharacter: defaultChar
+    }
+  }
+
+  handleItemClick = (item) => {
+    console.log(`Item: ${item} was clicked`)
+    // console.log(item);
+
+    let selectedCharacter = this.state.selectedCharacter;
+    selectedCharacter.addItem(item);
+    this.setState(() => ({
+      selectedCharacter
+    }))
+  }
+
+  handleChangeSelectedCharacter = (character) => {
+    this.setState(() => ({
+      selectedCharacter: character
+    }))
   }
 
   render() {
@@ -25,11 +44,17 @@ export default class MapleDesign extends Component {
         <View style={styles["widget-top"]}>
 
           <View style={styles["widget-top__item-listing"]}>
-            <ItemListing />
+            <ItemListing
+              onItemClick={this.handleItemClick}
+            />
           </View>
 
           <View style={styles["widget-top__canvas"]}>
-            <Canvas characters={this.state.characters} />
+            <Canvas
+            onCharacterClick = {this.handleChangeSelectedCharacter}
+            characters={this.state.characters} 
+            selectedCharacter = {this.state.selectedCharacter}
+            />
           </View>
         </View>
 

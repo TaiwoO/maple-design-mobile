@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, ImageBackground, Image } from 'react-native';
+import { StyleSheet, Text, View, ImageBackground, Image, TouchableWithoutFeedback } from 'react-native';
 import DraggableCanvas from '../../lib/DraggableCanvas';
 import DraggableContainer from '../../lib/DraggableContainer';
+import _ from 'lodash';
 
 export default class Canvas extends Component {
 
@@ -17,9 +18,21 @@ export default class Canvas extends Component {
         >
 
           {
+
             characters.map((character) => {
+              let borderStyle = {}
+              if (_.eq(character, this.props.selectedCharacter)) {
+                borderStyle = StyleSheet.flatten(styles["item--selected"])
+              }
+
               return (
-                <DraggableContainer key={character.id}>
+                <DraggableContainer
+                  key={character.id}
+                  style={borderStyle}
+                  onPress={() => {
+                    this.props.onCharacterClick(character)
+                  }}
+                >
                   <Image
                     source={{ uri: character.generateImageUrl() }}
                     style={{ width: 65, height: 100, resizeMode: 'contain' }}
@@ -57,5 +70,14 @@ const styles = StyleSheet.create({
     height: 100,
     borderRadius: 100 / 2,
   },
+
+  "item--selected": {
+    shadowOpacity: 0.85,
+    shadowRadius: 20,
+    shadowColor: '#000000',
+    shadowOffset: { height: 0, width: 0 },
+  }
+
+
 
 });

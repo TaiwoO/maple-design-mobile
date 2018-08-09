@@ -36,6 +36,7 @@ export default class DraggableContainer extends React.Component {
           dy: 0
         }));
 
+        this.props.onPress(); 
       },
       onPanResponderMove: (evt, gestureState) => {
 

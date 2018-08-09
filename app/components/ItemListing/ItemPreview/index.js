@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, FlatList, Dimensions, Image } from 'react-native';
+import { StyleSheet, Text, View, FlatList, Dimensions, Image, TouchableOpacity } from 'react-native';
 import _ from 'lodash';
 
 export default class ItemPreview extends Component {
@@ -57,17 +57,22 @@ export default class ItemPreview extends Component {
           this.state.dimensions &&
           (
             <FlatList
-
               contentContainerStyle={styles["preview-items-container"]}
               numColumns={Math.floor(this.state.dimensions.width / previewItemWidth)}
               data={previewItems}
               renderItem={({ item, index }) => (
                 <View style={{ width: previewItemWidth, height: previewItemHeight, flex: 1 }}>
                   <View style={styles["preview-item-image-container"]}>
-                    <Image
-                      source={{ uri: `https://labs.maplestory.io/api/${'gms'}/${'latest'}/item/${item.id}/icon` }}
-                      style={{ width: '100%', height: '100%', resizeMode: 'contain' }}
-                    />
+
+                    <TouchableOpacity
+                      onPress={() => { this.props.onItemClick(item) }}
+
+                    >
+                      <Image
+                        source={{ uri: `https://labs.maplestory.io/api/${'gms'}/${'latest'}/item/${item.id}/icon` }}
+                        style={{ width: '100%', height: '100%', resizeMode: 'contain' }}
+                      />
+                    </TouchableOpacity>
                   </View>
                   {/* <Text style={styles["preview_item__text"]}> {index}</Text> */}
                 </View>

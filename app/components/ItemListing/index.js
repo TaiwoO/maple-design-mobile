@@ -53,6 +53,10 @@ export default class ItemListing extends Component {
 
   }
 
+  handleItemClick = (item) => {
+    this.props.onItemClick(item);
+  }
+
   handleSubcategorySelected = (selectedSubcategory, category) => {
 
     console.log("You clicked on: " + selectedSubcategory);
@@ -98,6 +102,7 @@ export default class ItemListing extends Component {
 
         <View style={styles["item-preview"]}>
           <ItemPreview
+            onItemClick={this.handleItemClick}
             previewItems={this.state.currentPreviewItems}
           />
         </View>
