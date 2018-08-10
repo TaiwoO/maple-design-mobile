@@ -30,6 +30,13 @@ export default class MapleDesign extends Component {
     }))
   }
 
+  handleAddCharacter = () => {
+
+    this.setState((prevState) => ({
+      characters: [...prevState.characters, new Character()]
+    }))
+  }
+
   handleChangeSelectedCharacter = (character) => {
     this.setState(() => ({
       selectedCharacter: character
@@ -60,7 +67,12 @@ export default class MapleDesign extends Component {
 
         <View style={styles["widget-bottom"]}>
           <View style={styles["widget-bottom__character-list"]}>
-            <CharacterList />
+            <CharacterList 
+            onCharacterClick = {this.handleChangeSelectedCharacter}
+            characters={this.state.characters} 
+            selectedCharacter = {this.state.selectedCharacter}
+            onAddCharacter = {this.handleAddCharacter}
+            />
           </View>
         </View>
 
